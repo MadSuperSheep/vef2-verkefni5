@@ -27,6 +27,11 @@ function loadSavedLectures() {
  */
 export function getLectureList(filters = []) {
   /* todo */
+  if (filters.length === 0) return data.lectures;
+  else {
+    return data.lectures.filter(lecture =>
+      filters.find(category => category === lecture.category));
+  }
 }
 
 /**
