@@ -14,7 +14,7 @@ const LOCALSTORAGE_KEY = 'saved_lectures';
  * @returns {array} Fylki af slug fyrir vistaða fyrirlestra.
  */
 function loadSavedLectures() {
-  /* todo */
+  return JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY));
 }
 
 /**
@@ -26,12 +26,22 @@ function loadSavedLectures() {
  * @returns {array} Fylki af fyrirlestrum.
  */
 export function getLectureList(filters = []) {
-  /* todo */
-  if (filters.length === 0) return data.lectures;
+  const finished = loadSavedLectures();
+  const lectures = data.lectures;
+  
+  // If there is data in localstorage
+  if (finished) {
+    lectures.forEach(lecture => {
+      lecture.finished = finished.find(slug => slug === lecture.slug) ? true : false;
+    })
+  }
+  if (filters.length === 0) return lectures;
   else {
-    return data.lectures.filter(lecture =>
+    return lectures.filter(lecture =>
       filters.find(category => category === lecture.category));
   }
+
+  
 }
 
 /**
@@ -42,7 +52,16 @@ export function getLectureList(filters = []) {
  * @returns {object} Fyrirlestri sem fannst eða null ef engin fannst.
  */
 export function getLecture(slug) {
-  /* todo */
+  const lecture = data.lectures.find(obj => obj.slug === slug);
+  const fin = ((array) => {
+    return array ? array.find(element => element === slug) : null;
+  })(loadSavedLectures())
+
+  lecture.finished = fin ? true : false;
+
+  console.info('getlect = ', lecture);
+
+  return lecture;
 }
 
 /**
@@ -52,5 +71,12 @@ export function getLecture(slug) {
  * @param {string} slug Slug á fyrirlestri sem klára á.
  */
 export function toggleLectureFinish(slug) {
-  /* todo */
+  const stored = loadSavedLectures();
+  // Init storage
+  if (!stored) localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify([slug]))
+  else {
+    if (stored.find(element => element === slug)) stored.pop(slug)
+    else stored.push(slug);
+    localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(stored));
+  }
 }
