@@ -7,6 +7,8 @@
   list-style: none;
 
   &__filter {
+    border:none;
+    outline: 0 none;
     padding: $gutter / 2 $gutter;
     margin-right: $gutter;
     margin-left: $gutter;

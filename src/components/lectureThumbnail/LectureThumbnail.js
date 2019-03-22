@@ -17,7 +17,11 @@ export default class LectureThumbnail extends Component {
         <div className="list__col">
           <a className="listItem" href={"lecture/" + lecture.slug}>
               <div className="listItem__image">
+                  {lecture.thumbnail ? 
                   <img src={lecture.thumbnail} alt="Lecture" />
+                  :
+                  <div></div>
+                  }
               </div>
               <div className="listItem__bottom">
                   <div className="listItem__texts">
