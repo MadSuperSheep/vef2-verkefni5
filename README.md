@@ -1,3 +1,3 @@
 # Verkefni 5
 
-**Heroku** [Heroku-verkefni4](https://vef-verkefni5.herokuapp.com/)
+**Heroku** [Heroku-verkefni5](https://vef-verkefni5.herokuapp.com/)
